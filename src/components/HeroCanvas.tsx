@@ -10,7 +10,14 @@ export default function HeroCanvas() {
     if (!canvas) return;
 
     const w = canvas.offsetWidth, h = canvas.offsetHeight;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    } catch {
+      // WebGL not supported — hide canvas and exit gracefully
+      canvas.style.display = 'none';
+      return;
+    }
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.setSize(w, h);
 
@@ -83,7 +90,7 @@ export default function HeroCanvas() {
       cancelAnimationFrame(raf);
       window.removeEventListener('mousemove', onMM);
       window.removeEventListener('resize', onResize);
-      renderer.dispose();
+      renderer?.dispose();
     };
   }, []);
 
