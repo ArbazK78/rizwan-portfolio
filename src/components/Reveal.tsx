@@ -27,9 +27,9 @@ export default function Reveal({
   children,
   direction = 'up',
   delay = 0,
-  duration = 600,
-  distance = 32,
-  threshold = 0.12,
+  duration = 700,
+  distance = 28,
+  threshold = 0.1,
   style,
   className,
 }: Props) {
@@ -42,7 +42,9 @@ export default function Reveal({
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'none' : getTranslate(direction, distance),
-        transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
+        // cubic-bezier gives a snappier, more premium feel than plain ease
+        transition: `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1), transform ${duration}ms cubic-bezier(0.22,1,0.36,1)`,
+        willChange: 'opacity, transform',
         ...style,
       }}
     >
