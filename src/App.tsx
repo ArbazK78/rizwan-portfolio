@@ -7,6 +7,8 @@ import ContactForm from './components/ContactForm';
 import Reveal from './components/Reveal';
 import LoadingScreen from './components/LoadingScreen';
 import AboutSection from './components/AboutSection';
+import { useToast } from './hooks/useToast';
+import { ToastContainer } from './components/Toast';
 import type { Skill, Project, ContactItem } from '../types';
 
 const Github = ({ size = 24, color = 'currentColor' }: { size?: number; color?: string }) => (
@@ -106,6 +108,7 @@ export default function App() {
   const rafRef  = useRef<number>(0);
   const skillsRef = useRef<HTMLElement>(null);
   const [skillsVisible, setSkillsVisible] = useState(false);
+  const { toasts, toast, remove } = useToast();
 
   const px = isMobile ? '20px' : isTablet ? '36px' : '60px';
   const sectionPad = `${isMobile ? 70 : 120}px ${px}`;
@@ -271,7 +274,7 @@ export default function App() {
                   style={{ padding:'12px 26px', borderRadius:10, background:`linear-gradient(135deg,${C.p1},${C.p3})`, color:'#fff', fontWeight:600, fontSize:14, border:'none', cursor:'none', boxShadow:'0 0 30px rgba(124,58,237,0.3)' }}>
                   View Projects
                 </button>
-                <button onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
+                <button onClick={() => toast('Downloading CV...', 'info')} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
                   style={{ padding:'11px 22px', borderRadius:10, background:'transparent', border:`1px solid ${C.border}`, color:C.sub, fontSize:14, fontWeight:500, cursor:'none' }}>
                   Download CV
                 </button>
@@ -281,7 +284,7 @@ export default function App() {
                   { label:'GitHub',   url:'https://github.com/ArbazK78',            icon:<Github size={14}/> },
                   { label:'LinkedIn', url:'https://in.linkedin.com/in/rizwan-gad',  icon:<Linkedin size={14}/> },
                 ].map(s => (
-                  <a key={s.label} href={s.url} target="_blank" rel="noreferrer" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
+                  <a key={s.label} href={s.url} target="_blank" rel="noreferrer" onClick={() => toast(`Opening ${s.label}...`, 'info')} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
                     style={{ padding:'8px 16px', borderRadius:8, background:C.card, border:`1px solid ${C.border}`, fontSize:12, fontWeight:600, color:C.sub, textDecoration:'none', display:'flex', alignItems:'center', gap:7 }}>
                     {s.icon}{s.label} ↗
                   </a>
@@ -499,7 +502,7 @@ export default function App() {
             </div>
           </Reveal>
           <Reveal direction="right" delay={200}>
-            <ContactForm onHover={setHovering}/>
+            <ContactForm onHover={setHovering} onToast={toast}/>
           </Reveal>
         </div>
       </section>
@@ -515,7 +518,7 @@ export default function App() {
               { icon:<Github size={14}/>,   label:'GitHub',   url:'https://github.com/ArbazK78' },
               { icon:<Linkedin size={14}/>, label:'LinkedIn', url:'https://in.linkedin.com/in/rizwan-gad' },
             ].map(l => (
-              <a key={l.label} href={l.url} target="_blank" rel="noreferrer" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
+              <a key={l.label} href={l.url} target="_blank" rel="noreferrer" onClick={() => toast(`Opening ${l.label}...`, 'info')} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}
                 style={{ padding:'7px 14px', borderRadius:8, background:C.card, border:`1px solid ${C.border}`, fontSize:12, color:C.sub, textDecoration:'none', display:'flex', alignItems:'center', gap:6 }}>
                 {l.icon}{l.label}
               </a>
@@ -524,6 +527,7 @@ export default function App() {
         </footer>
       </Reveal>
     </div>
+    <ToastContainer toasts={toasts} onRemove={remove} />
     </>
   );
 }

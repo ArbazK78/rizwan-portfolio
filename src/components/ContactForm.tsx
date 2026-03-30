@@ -13,7 +13,10 @@ const C = {
 
 type Status = 'idle' | 'sending' | 'success' | 'error' | 'error_validation' | 'error_email';
 
-interface Props { onHover: (v: boolean) => void; }
+interface Props {
+  onHover: (v: boolean) => void;
+  onToast: (message: string, type: 'success' | 'error' | 'info') => void;
+}
 
 const PROJECT_TYPES = [
   'Full Stack Development',
@@ -49,7 +52,7 @@ function DropOption({ label, selected, isLast, onClick, onHover }: {
 }
 
 /* ── Contact Form ── */
-export default function ContactForm({ onHover }: Props) {
+export default function ContactForm({ onHover, onToast }: Props) {
   const [form, setForm] = useState({ first: '', last: '', email: '', type: '', msg: '' });
   const [status, setStatus] = useState<Status>('idle');
   const [countdown, setCountdown] = useState(5);
@@ -110,11 +113,14 @@ export default function ContactForm({ onHover }: Props) {
         setStatus('success');
         setForm({ first: '', last: '', email: '', type: '', msg: '' });
         setTimeout(() => setStatus('idle'), 5000);
+        onToast('Message sent! Rizwan will be in touch shortly.', 'success');
       } else {
         setStatus('error');
+        onToast('Failed to send. Please try again.', 'error');
       }
     } catch {
       setStatus('error');
+      onToast('Failed to send. Please try again.', 'error');
     }
   };
 
