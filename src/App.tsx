@@ -5,6 +5,8 @@ import SkillCard from './components/SkillCard';
 import GlassDemoBtn from './components/GlassDemoBtn';
 import ContactForm from './components/ContactForm';
 import Reveal from './components/Reveal';
+import LoadingScreen from './components/LoadingScreen';
+import AboutSection from './components/AboutSection';
 import type { Skill, Project, ContactItem } from '../types';
 
 const Github = ({ size = 24, color = 'currentColor' }: { size?: number; color?: string }) => (
@@ -93,6 +95,7 @@ function useBreakpoint() {
 /* ── APP ── */
 export default function App() {
   const { isMobile, isTablet } = useBreakpoint();
+  const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('hero');
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [ringPos, setRingPos] = useState({ x: 0, y: 0 });
@@ -133,7 +136,7 @@ export default function App() {
       entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
       { threshold: 0.3 }
     );
-    ['hero', 'skills', 'projects', 'contact'].forEach(id => {
+    ['hero', 'about', 'skills', 'projects', 'contact'].forEach(id => {
       const el = document.getElementById(id);
       if (el) obs.observe(el);
     });
@@ -172,7 +175,9 @@ export default function App() {
   ];
 
   return (
-    <div style={{ background: C.bg, color: C.text, fontFamily: 'Inter,sans-serif', overflowX: 'hidden', cursor: 'none', minHeight: '100vh' }}>
+    <>
+      {loading && <LoadingScreen onDone={() => setLoading(false)} />}
+      <div style={{ background: C.bg, color: C.text, fontFamily: 'Inter,sans-serif', overflowX: 'hidden', cursor: 'none', minHeight: '100vh', opacity: loading ? 0 : 1, transition: 'opacity 0.4s ease' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         @keyframes float      { 0%,100%{transform:translateY(0) rotate(0deg)} 25%{transform:translateY(-14px) rotate(.5deg)} 75%{transform:translateY(-7px) rotate(-.5deg)} }
@@ -198,7 +203,7 @@ export default function App() {
 
         {!isTablet && (
           <div style={{ display:'flex', gap:36 }}>
-            {['hero','skills','projects','contact'].map(id => (
+            {['hero','about','skills','projects','contact'].map(id => (
               <span key={id} style={navLink(id)} onClick={() => scrollTo(id)} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
                 {id.charAt(0).toUpperCase() + id.slice(1)}
               </span>
@@ -225,7 +230,7 @@ export default function App() {
       {/* ── MOBILE MENU ── */}
       {isTablet && menuOpen && (
         <div style={{ position:'fixed', top:65, left:0, right:0, zIndex:199, background:'rgba(13,13,26,0.98)', backdropFilter:'blur(20px)', borderBottom:`1px solid ${C.border}`, padding:`16px ${px} 24px`, animation:'slideDown 0.2s ease' }}>
-          {['hero','skills','projects','contact'].map(id => (
+          {['hero','about','skills','projects','contact'].map(id => (
             <div key={id} onClick={() => scrollTo(id)}
               style={{ padding:'14px 0', borderBottom:`1px solid ${C.border}`, color:activeSection===id?C.text:C.sub, fontSize:15, fontWeight:500, cursor:'none' }}>
               {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -326,6 +331,10 @@ export default function App() {
           <div style={{ width:1, height:36, background:`linear-gradient(to bottom,${C.p1},transparent)`, animation:'scrollline 2s ease-in-out infinite' }}/>
         </div>
       </section>
+
+      <div style={{ height:1, background:`linear-gradient(90deg,transparent,${C.border},transparent)`, margin:`0 ${px}` }}/>
+
+      <AboutSection isMobile={isMobile} isTablet={isTablet} onHover={setHovering} />
 
       <div style={{ height:1, background:`linear-gradient(90deg,transparent,${C.border},transparent)`, margin:`0 ${px}` }}/>
 
@@ -515,5 +524,6 @@ export default function App() {
         </footer>
       </Reveal>
     </div>
+    </>
   );
 }
