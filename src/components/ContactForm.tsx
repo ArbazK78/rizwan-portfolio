@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { CheckCircle2, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
 
 const EJS_SERVICE_ID  = import.meta.env.VITE_EJS_SERVICE_ID;
 const EJS_TEMPLATE_ID = import.meta.env.VITE_EJS_TEMPLATE_ID;
@@ -14,9 +14,53 @@ type Status = 'idle' | 'sending' | 'success' | 'error' | 'error_validation';
 
 interface Props { onHover: (v: boolean) => void; }
 
+/* ── Custom dropdown option ── */
+function DropOption({ label, selected, isLast, onClick, onHover }: {
+  label: string; selected: boolean; isLast: boolean;
+  onClick: () => void; onHover: (v: boolean) => void;
+}) {
+  const [hov, setHov] = useState(false);
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => { setHov(true); onHover(true); }}
+      onMouseLeave={() => { setHov(false); onHover(false); }}
+      style={{
+        padding: '11px 16px', fontSize: 14, cursor: 'none',
+        borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.05)',
+        background: selected ? 'rgba(124,58,237,0.15)' : hov ? 'rgba(124,58,237,0.08)' : 'transparent',
+        color: selected ? '#a855f7' : hov ? '#f1f5f9' : '#94a3b8',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        transition: 'background 0.15s, color 0.15s',
+      }}
+    >
+      {label}
+      {selected && <span style={{ fontSize: 12, color: '#a855f7' }}>✓</span>}
+    </div>
+  );
+}
+
 export default function ContactForm({ onHover }: Props) {
   const [form, setForm] = useState({ first: '', last: '', email: '', type: '', msg: '' });
   const [status, setStatus] = useState<Status>('idle');
+  const [dropOpen, setDropOpen] = useState(false);
+  const dropRef = useRef<HTMLDivElement>(null);
+
+  const PROJECT_TYPES = [
+    'Full Stack Development',
+    'Backend / API Development',
+    'AI / ML Integration',
+    'Performance Optimisation',
+  ];
+
+  // close dropdown when clicking outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(e.target as Node)) setDropOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   const inp: React.CSSProperties = {
     background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10,
@@ -87,12 +131,27 @@ export default function ContactForm({ onHover }: Props) {
             <label style={{ fontSize: 11, fontWeight: 600, color: C.sub, letterSpacing: '0.05em', textTransform: 'uppercase', display: 'block', marginBottom: 7 }}>Email</label>
             <input type="email" style={inp} placeholder="john@company.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}/>
           </div>
-          <div style={{ marginBottom: 14 }}>
+          <div style={{ marginBottom: 14 }} ref={dropRef}>
             <label style={{ fontSize: 11, fontWeight: 600, color: C.sub, letterSpacing: '0.05em', textTransform: 'uppercase', display: 'block', marginBottom: 7 }}>Project Type</label>
-            <select style={{ ...inp, appearance: 'none', color: form.type ? C.text : '#475569' }} value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}>
-              <option value="">Select project type...</option>
-              {['Full Stack Development','Backend / API Development','AI / ML Integration','Performance Optimisation'].map(o => <option key={o}>{o}</option>)}
-            </select>
+            <div style={{ position: 'relative' }}>
+              {/* Trigger */}
+              <div onClick={() => setDropOpen(o => !o)} onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}
+                style={{ ...inp, display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'none', border: `1px solid ${dropOpen ? 'rgba(124,58,237,0.5)' : C.border}`, boxShadow: dropOpen ? '0 0 0 3px rgba(124,58,237,0.1)' : 'none', transition: 'border-color 0.2s, box-shadow 0.2s', userSelect: 'none' }}>
+                <span style={{ color: form.type ? C.text : '#475569', fontSize: 14 }}>{form.type || 'Select project type...'}</span>
+                <ChevronDown size={16} color={C.sub} style={{ transform: dropOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', flexShrink: 0 }}/>
+              </div>
+              {/* Options */}
+              {dropOpen && (
+                <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, background: '#0e0e1a', border: `1px solid rgba(124,58,237,0.35)`, borderRadius: 10, overflow: 'hidden', zIndex: 50, boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}>
+                  {PROJECT_TYPES.map((opt, i) => (
+                    <DropOption key={opt} label={opt} selected={form.type === opt}
+                      isLast={i === PROJECT_TYPES.length - 1}
+                      onClick={() => { setForm({ ...form, type: opt }); setDropOpen(false); }}
+                      onHover={onHover}/>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ fontSize: 11, fontWeight: 600, color: C.sub, letterSpacing: '0.05em', textTransform: 'uppercase', display: 'block', marginBottom: 7 }}>Message</label>
