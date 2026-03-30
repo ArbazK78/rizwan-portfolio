@@ -500,7 +500,7 @@ export default function App() {
       ══════════════════════════════════ */}
       <Reveal direction="up" delay={100}>
         <footer style={{ borderTop:`1px solid ${C.border}`, padding:`24px ${px}`, display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
-          <div style={{ fontSize:12, color:C.muted }}>© 2025 Rizwan Gad · React + Three.js + TypeScript</div>
+          <div style={{ fontSize:12, color:C.muted }}>© 2025 Rizwan Gad - I build things for the web.</div>
           <div style={{ display:'flex', gap:10 }}>
             {[
               { icon:<Github size={14}/>,   label:'GitHub',   url:'https://github.com/ArbazK78' },
