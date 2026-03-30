@@ -197,7 +197,7 @@ export default function App() {
       {/* ── CURSOR ── */}
       {!isMobile && <>
         <div style={{ position:'fixed', width:10, height:10, background:'#fff', borderRadius:'50%', pointerEvents:'none', zIndex:9999, left:cursorPos.x, top:cursorPos.y, transform:'translate(-50%,-50%)', mixBlendMode:'difference' }}/>
-        <div style={{ position:'fixed', width:hovering?52:36, height:hovering?52:36, border:`1.5px solid ${hovering ? C.p2 : 'rgba(124,58,237,0.7)'}`, borderRadius:'50%', pointerEvents:'none', zIndex:9998, left:ringPos.x, top:ringPos.y, transform:'translate(-50%,-50%)', transition:'width 0.2s,height 0.2s,border-color 0.2s' }}/>
+        <div style={{ position:'fixed', width:hovering?52:36, height:hovering?52:36, border:`1.5px solid ${hovering ? '#06b6d4' : 'rgba(6,182,212,0.6)'}`, borderRadius:'50%', pointerEvents:'none', zIndex:9998, left:ringPos.x, top:ringPos.y, transform:'translate(-50%,-50%)', transition:'width 0.2s,height 0.2s,border-color 0.2s' }}/>
       </>}
 
       {/* ── NAV ── */}
