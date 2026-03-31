@@ -223,7 +223,7 @@ export default function App() {
           )}
           {isTablet && (
             <button onClick={() => setMenuOpen(o => !o)}
-              style={{ background:'transparent', border:`1px solid ${C.border}`, borderRadius:8, padding:8, cursor:'none', display:'flex', alignItems:'center', color:C.text }}>
+              style={{ background:'transparent', border:`1px solid ${C.border}`, borderRadius:8, padding:isMobile?12:8, cursor:'none', display:'flex', alignItems:'center', justifyContent:'center', color:C.text, fontSize:isMobile?24:18, minWidth:isMobile?44:36, minHeight:isMobile?44:36 }}>
               {menuOpen ? '✕' : '☰'}
             </button>
           )}
