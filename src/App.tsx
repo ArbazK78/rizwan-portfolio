@@ -639,7 +639,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       const link = document.createElement("a");
-                      link.href = "/rizwan-cv.pdf";
+                      link.href = "/Rizwan_CV_2026.pdf";
                       link.download = "Rizwan_Gad_Resume.pdf";
                       link.click();
                       toast("Downloading CV...", "info");
