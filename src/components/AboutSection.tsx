@@ -9,9 +9,9 @@ const C = {
 
 const TIMELINE = [
   { year: '2021', title: 'Started Computer Science',   color: C.p1, desc: 'Began my journey into software engineering, falling in love with backend systems and algorithms.' },
-  { year: '2022', title: 'First AI Project',            color: C.p2, desc: 'Built the AI Demographic Predictor — 91% accuracy on ethnicity, age and gender detection using TensorFlow and OpenCV.' },
-  { year: '2023', title: 'Healthcare Impact',           color: C.p3, desc: 'Developed WellCare to solve a real-world problem — helping people navigate medical emergencies without human support nearby.' },
-  { year: '2024', title: 'Enterprise Engineering',      color: C.p1, desc: 'Joined professional corporate work — built the Scheduling Planner that outperforms MSP by 50% handling 80K tasks.' },
+  { year: '2023', title: 'First AI Project',            color: C.p2, desc: 'Built the AI Demographic Predictor — 91% accuracy on ethnicity, age and gender detection using TensorFlow and OpenCV.' },
+  { year: '2024', title: 'Healthcare Impact',           color: C.p3, desc: 'Developed WellCare to solve a real-world problem — helping people navigate medical emergencies without human support nearby.' },
+  { year: '2025', title: 'Enterprise Engineering',      color: C.p1, desc: 'Joined professional corporate work — built the Scheduling Planner that outperforms MSP by 50% handling 80K tasks.' },
   { year: 'Now',  title: 'Open for Opportunities',     color: C.p2, desc: 'Actively taking on freelance client projects in full stack, backend architecture, and AI integration.' },
 ];
 
