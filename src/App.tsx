@@ -9,6 +9,15 @@ import LoadingScreen from "./components/LoadingScreen";
 import AboutSection from "./components/AboutSection";
 import { useToast } from "./hooks/useToast";
 import { ToastContainer } from "./components/Toast";
+import JavaIcon from "./icons/Java";
+import SpringbootIcon from "./icons/Springboot";
+import PythonIcon from "./icons/Python";
+import ReactIcon from "./icons/React";
+import TypeScriptIcon from "./icons/TypeScript";
+import TensorFlowIcon from "./icons/TensorFlow";
+import DockerIcon from "./icons/Docker";
+import AWSIcon from "./icons/AWS";
+import PostgreSQLIcon from "./icons/PostgreSQL";
 import type { Skill, Project, ContactItem } from "../types";
 
 const Github = ({
@@ -63,52 +72,34 @@ const C = {
 
 /* ── DATA ── */
 const SKILLS: Skill[] = [
-  { symbol: "☕", fcolor: "#f89820", name: "Java", level: "Expert", pct: 95 },
+  { symbol: <JavaIcon size={22} />, fcolor: "#f89820", name: "Java", level: "Expert", pct: 95 },
+  { symbol: <SpringbootIcon size={22} />, fcolor: "#6db33f", name: "Spring Boot", level: "Expert", pct: 92 },
+  { symbol: <PythonIcon size={22} />, fcolor: "#3776ab", name: "Python", level: "Advanced", pct: 85 },
+  { symbol: <ReactIcon size={22} />, fcolor: "#61dafb", name: "React", level: "Advanced", pct: 83 },
+  { symbol: <TypeScriptIcon size={22} />, fcolor: "#3178c6", name: "TypeScript", level: "Advanced", pct: 80 },
   {
-    symbol: "🌿",
-    fcolor: "#6db33f",
-    name: "Spring Boot",
-    level: "Expert",
-    pct: 92,
-  },
-  {
-    symbol: "🐍",
-    fcolor: "#3776ab",
-    name: "Python",
-    level: "Advanced",
-    pct: 85,
-  },
-  { symbol: "⚛", fcolor: "#61dafb", name: "React", level: "Advanced", pct: 83 },
-  {
-    symbol: "TS",
-    fcolor: "#3178c6",
-    name: "TypeScript",
-    level: "Advanced",
-    pct: 80,
-  },
-  {
-    symbol: "TF",
+    symbol: <TensorFlowIcon size={22} />,
     fcolor: "#ff6f00",
     name: "TensorFlow/AI",
     level: "Advanced",
     pct: 78,
   },
   {
-    symbol: "🐳",
+    symbol: <DockerIcon size={22} />,
     fcolor: "#2496ed",
     name: "Docker",
     level: "Proficient",
     pct: 75,
   },
   {
-    symbol: "AWS",
+    symbol: <AWSIcon size={22} />,
     fcolor: "#ff9900",
     name: "AWS",
     level: "Proficient",
     pct: 72,
   },
   {
-    symbol: "🐘",
+    symbol: <PostgreSQLIcon size={22} />,
     fcolor: "#4169e1",
     name: "PostgreSQL",
     level: "Advanced",

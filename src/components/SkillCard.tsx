@@ -32,10 +32,12 @@ export default function SkillCard({ sk, visible, delay, onHover }: Props) {
         boxShadow: hov ? `0 0 14px ${sk.fcolor}30` : 'none', transition: 'box-shadow 0.3s',
       }}>
         <span style={{
-          fontSize: sk.symbol.length > 2 ? 10 : sk.symbol.length === 2 ? 14 : 22,
+          fontSize: typeof sk.symbol === 'string' ? (sk.symbol.length > 2 ? 10 : sk.symbol.length === 2 ? 14 : 22) : 22,
           fontWeight: 900, color: sk.fcolor, fontFamily: "'Inter',monospace",
           letterSpacing: '-0.03em', lineHeight: 1,
-        }}>{sk.symbol}</span>
+        }}>
+          {typeof sk.symbol === 'string' ? sk.symbol : sk.symbol}
+        </span>
       </div>
       <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 3, color: C.text }}>{sk.name}</div>
       <div style={{ fontSize: 10, color: C.muted, marginBottom: 12 }}>{sk.level}</div>

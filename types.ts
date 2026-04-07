@@ -1,5 +1,5 @@
 export interface Skill {
-  symbol: string;
+  symbol: string | React.ReactNode;
   fcolor: string;
   name: string;
   level: string;
