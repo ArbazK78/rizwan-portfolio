@@ -2,10 +2,9 @@ import React from 'react';
 
 interface TypeScriptIconProps {
   size?: number;
-  color?: string;
 }
 
-const TypeScriptIcon: React.FC<TypeScriptIconProps> = ({ size = 24, color = 'currentColor' }) => (
+const TypeScriptIcon: React.FC<TypeScriptIconProps> = ({ size = 24 }) => (
   <img
     src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
     alt="TypeScript"
