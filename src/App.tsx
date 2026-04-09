@@ -550,7 +550,7 @@ export default function App() {
                       animation: "pulse 2s infinite",
                     }}
                   />
-                  Available for Freelance
+                  Immediate Joiner
                 </div>
                 <h1
                   style={{
@@ -687,7 +687,7 @@ export default function App() {
                       }}
                     >
                       {s.icon}
-                      {s.label} ↗
+                      {s.label}
                     </a>
                   ))}
                 </div>
